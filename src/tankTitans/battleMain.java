@@ -6,7 +6,6 @@ package tankTitans;
 
 import processing.core.PApplet;
 import processing.core.PImage;
-
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.Random;
@@ -57,8 +56,9 @@ public class battleMain extends PApplet {
     /* Enemy */
     private ArrayList<Enemy> enemies;
     private PImage[] temp_enemy;
+    private PImage[] temp_enemy_broken;
     private int enemy_rows = 9;
-    private int enemy_res = 32;
+    private int enemy_res = 64;
     private ArrayList<BulletEnemy> bullets_enemy;
     private PImage[] temp_bullet_enemy;
     private int enemy_bullet_res = 32;
@@ -113,10 +113,12 @@ public class battleMain extends PApplet {
 
         /* Player */
         PImage[] temp_player = new PImage[4];
+        PImage[] temp_player_broken = new PImage[4];
         for (int i = 0; i < temp_player.length; i++) {
             temp_player[i] = loadImage("src/assets/player/Idle/(" + (i + 1) + ").png");
+            temp_player_broken[i] = loadImage("src/assets/player/broken/(" + (i + 1) + ").png");
         }
-        p = new Player(temp_player, 192, 360, player_res);
+        p = new Player(temp_player, temp_player_broken, 192, 360, player_res);
 
         /* Bullets */
         bullets = new ArrayList<>();
@@ -128,8 +130,10 @@ public class battleMain extends PApplet {
         /* Enemy */
         enemies = new ArrayList<>();
         temp_enemy = new PImage[4];
+        temp_enemy_broken = new PImage[4];
         for (int i = 0; i < temp_enemy.length; i++) {
             temp_enemy[i] = loadImage("src/assets/enemy/Idle/(" + (i + 1) + ").png");
+            temp_enemy_broken[i] = loadImage("src/assets/enemy/broken/(" + (i + 1) + ").png");
         }
 
         /* Enemy bullets */
@@ -166,14 +170,14 @@ public class battleMain extends PApplet {
         }
         if (is_battle) {
             gameDelay();
-            background(20);
+            background(255);
             testingFrame();
             playerMechanism();
-            bulletMechanism();
+            effectMechanism();
             enemiesMechanism();
             roundEndMechanism();
+            bulletMechanism();
             explosionMechanism();
-            effectMechanism();
             timerMechanism();
             statsDisplay();
         } else {
@@ -216,11 +220,19 @@ public class battleMain extends PApplet {
     private void roundEndMechanism() {
         /* Cek musuh habis */
         if (pause_ctr >= 0) {
+            boolean enemies_down = true;
+            for (int i = 0; i < enemies.size(); i++) {
+                if (!enemies.get(i).is_broken()) {
+                    enemies_down = false;
+                }
+            }
+
             if (killenemies) {
                 enemies.clear();
                 round_end = true;
                 killenemies = false;
-            } else if (enemies.size() == 0) {
+            } else if (enemies_down) {
+                enemies.clear();
                 round_end = true;
             }
         }
@@ -360,17 +372,11 @@ public class battleMain extends PApplet {
             for (int i = 0; i < enemy_rows; i++) {
                 System.out.println("Enemy " + i);
 
-                if (level == 1) {
-                    enemies.add(new Enemy(temp_enemy, 1280 - 192, y_spawn[i], enemy_res, 3, 1, 0));
-                } else if (level == 2) {
-                    enemies.add(new Enemy(temp_enemy, 1280 - 192 - 32, y_spawn[i], enemy_res, 3, 2, 0));
-                } else if (level == 3) {
-                    enemies.add(new Enemy(temp_enemy, 1280 - 192 - 32, y_spawn[i], enemy_res, 6, 2, 0));
-                } else if (level == 4) {
-                    enemies.add(new Enemy(temp_enemy, 1280 - 192 - 48, y_spawn[i], enemy_res, 6, 2, 0));
-                } else if (level >= 5) {
-                    enemies.add(new Enemy(temp_enemy, 1280 - 192 - 48, y_spawn[i], enemy_res, 10, 2, 0));
-                }
+                if (level == 1) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192, y_spawn[i], enemy_res, 3, 1, 0));
+                else if (level == 2) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 32, y_spawn[i], enemy_res, 3, 2, 0));
+                else if (level == 3) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 32, y_spawn[i], enemy_res, 6, 2, 0));
+                else if (level == 4) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 48, y_spawn[i], enemy_res, 6, 2, 0));
+                else if (level >= 5) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 48, y_spawn[i], enemy_res, 10, 2, 0));
             }
 
             if (enemy_rows < 5) {
@@ -400,15 +406,15 @@ public class battleMain extends PApplet {
 
     private void statsDisplay() {
         textSize(16);
-        fill(0, 208, 612);
+        fill(0);
         text("HP : " + p.getHP(), 48, 48);
-        fill(000, 208, 612);
+        fill(0);
         text("ATK : " + p.getATK(), 48 + 72, 48);
-        fill(000, 208, 612);
+        fill(0);
         text("Level : " + level, 48 + 72 + 192, 48);
-        fill(000, 208, 612);
+        fill(0);
         text("fire_ctr : " + fire_ctr, 48 + 72 + 192 + 72, 48);
-        fill(000, 208, 612);
+        fill(0);
         text("pause_ctr : " + pause_ctr, 48 + 72 + 192 + 72 + 128, 48);
 
         Formatter formatter = new Formatter();
@@ -468,24 +474,26 @@ public class battleMain extends PApplet {
 
     private void bulletEnemyMechanism() {
         for (int i = 0; i < enemies.size(); i++) {
-            Random rnd = new Random();
-            int fire_chance = 0;
-            if (level == 1) {
-                fire_chance = rnd.nextInt(1, 300);
-            } else if (level == 2) {
-                fire_chance = rnd.nextInt(1, 260);
-            } else if (level == 3) {
-                fire_chance = rnd.nextInt(1, 230);
-            } else if (level == 4) {
-                fire_chance = rnd.nextInt(1, 200);
-            } else if (level >= 5) {
-                fire_chance = rnd.nextInt(1, 150);
-            }
+            if (!enemies.get(i).is_broken()) {
+                Random rnd = new Random();
+                int fire_chance = 0;
+                if (level == 1) {
+                    fire_chance = rnd.nextInt(1, 300);
+                } else if (level == 2) {
+                    fire_chance = rnd.nextInt(1, 260);
+                } else if (level == 3) {
+                    fire_chance = rnd.nextInt(1, 230);
+                } else if (level == 4) {
+                    fire_chance = rnd.nextInt(1, 200);
+                } else if (level >= 5) {
+                    fire_chance = rnd.nextInt(1, 150);
+                }
 
-            int bullet_distance = 3;
-            if (fire_chance >= 1 && fire_chance <= 1) {
-                bullets_enemy.add(new BulletEnemy(temp_bullet, enemies.get(i).getX() - bullet_distance, enemies.get(i).getY(), enemy_bullet_res, enemies.get(i).getATK()));
-                System.out.println("Dor dor");
+                int bullet_distance = 3;
+                if (fire_chance >= 1 && fire_chance <= 1) {
+                    bullets_enemy.add(new BulletEnemy(temp_bullet, enemies.get(i).getX() - bullet_distance, enemies.get(i).getY(), enemy_bullet_res, enemies.get(i).getATK()));
+                    System.out.println("Dor dor");
+                }
             }
         }
 
@@ -510,7 +518,8 @@ public class battleMain extends PApplet {
 
                         p.getHit(bullets_enemy.get(i).getATK());
                         if (p.getHP() <= 0) {
-                            is_battle = false;
+                            p.brokeDown();
+//                            is_battle = false;
                             game_over = true;
                         }
                     }
@@ -523,6 +532,7 @@ public class battleMain extends PApplet {
 
                 /* Kena dong BOOM */
                 if (hit) {
+                    explosions.add(new Explosion(temp_explosion, bullets_enemy.get(i).getX(), bullets_enemy.get(i).getY(), explosion_res));
                     bullets_enemy.remove(i);
                     System.out.println("DUARRRRR!!!!! kenek kon thoel");
                 }
@@ -556,18 +566,20 @@ public class battleMain extends PApplet {
                     for (int j = enemies.size() - 1; j >= 0; j--) {
 //                        System.out.println("Hitbox " + i + ", " + j);
                         /* Penentuan hitbox */
-                        int bounding_left = enemies.get(j).getX() - enemies.get(j).getRes() / 2;
-                        int bounding_right = enemies.get(j).getX() + enemies.get(j).getRes() / 2;
-                        int bounding_top = enemies.get(j).getY() - enemies.get(j).getRes() / 2;
-                        int bounding_bottom = enemies.get(j).getY() + enemies.get(j).getRes() / 2;
+                        int bounding_left = enemies.get(j).getX() - enemies.get(j).getRes() / 2 / 2;
+                        int bounding_right = enemies.get(j).getX() + enemies.get(j).getRes() / 2 / 2;
+                        int bounding_top = enemies.get(j).getY() - enemies.get(j).getRes() / 2 / 2;
+                        int bounding_bottom = enemies.get(j).getY() + enemies.get(j).getRes() / 2 / 2;
 
                         if (bullets.get(i).getX() >= bounding_left && bullets.get(i).getX() <= bounding_right) {
                             if (bullets.get(i).getY() >= bounding_top && bullets.get(i).getY() <= bounding_bottom) {
-                                hit = true;
+                                if (!enemies.get(j).is_broken()) {
+                                    hit = true;
 
-                                enemies.get(j).getHit(bullets.get(i).getATK());
-                                if (enemies.get(j).getHP() <= 0) {
-                                    enemies.remove(j);
+                                    enemies.get(j).getHit(bullets.get(i).getATK());
+                                    if (enemies.get(j).getHP() <= 0) {
+                                        enemies.get(j).brokeDown();
+                                    }
                                 }
                             }
                         }

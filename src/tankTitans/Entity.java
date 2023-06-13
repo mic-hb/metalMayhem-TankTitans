@@ -14,9 +14,11 @@ public abstract class Entity {
     protected int HP, ATK, DEF;
     protected int x, y;
     protected int res;
+    protected boolean is_broken;
 
     /* Properti untuk display (termasuk animasi) */
     protected PImage[] idle;
+    protected PImage[] broken;
     protected int timing;
     protected int frame;
     protected int total_frame;
@@ -28,6 +30,11 @@ public abstract class Entity {
         this.DEF = DEF;
         this.x = x;
         this.y = y;
+        this.is_broken = false;
+    }
+
+    public void brokeDown() {
+        is_broken = true;
     }
 
     public int getX() {
@@ -52,5 +59,9 @@ public abstract class Entity {
 
     public void getHit(int atk) {
         this.HP -= atk;
+    }
+
+    public boolean is_broken() {
+        return is_broken;
     }
 }
