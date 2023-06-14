@@ -25,10 +25,11 @@ public class tankTitans extends PApplet {
      *  Round: Main Menu
      */
     private PImage bg_mainMenu;
-    private GUIButton b_playGame = new GUIButton(620, 180, 100, 75, Color.CYAN);
-    private GUIButton b_highscore = new GUIButton(620, 400, 100, 75, Color.CYAN);
-    private GUIButton b_exit = new GUIButton(620, 500, 100, 75, Color.CYAN);
+    private GUIButton b_playGame = new GUIButton("Play!",620, 180, 100, 75, Color.CYAN);
+    private GUIButton b_highscore = new GUIButton("Highscore",620, 400, 100, 75, Color.CYAN);
+    private GUIButton b_exit = new GUIButton("Exit",620, 500, 100, 75, Color.CYAN);
     private boolean click_playGame = false;
+    private boolean click_highScore = false;
 
     public static void main(String[] args) {
         // TODO code application logic here
@@ -42,13 +43,11 @@ public class tankTitans extends PApplet {
     public void settings() {
         size(WIDTH, HEIGHT);
     }
-    
+
     public void setup() {
         /* Backgrounds */
         frameRate(FPS);
-        bg_mainMenu = loadImage("src/assets/background/background_1.png");
-
-        
+        bg_mainMenu = loadImage("src/assets/background/Main_Menu-1.png");
     }
 
     /**
@@ -60,7 +59,7 @@ public class tankTitans extends PApplet {
             background(bg_mainMenu);
             fill(255, 245, 248);
             stroke(255, 245, 258);
-            
+
             rect(b_playGame.getX(), b_playGame.getY(), b_playGame.getWidth(), b_playGame.getHeight());
             rect(b_highscore.getX(), b_highscore.getY(), b_highscore.getWidth(), b_highscore.getHeight());
             rect(b_exit.getX(), b_exit.getY(), b_exit.getWidth(), b_exit.getHeight());
@@ -78,6 +77,13 @@ public class tankTitans extends PApplet {
             String[] args = {"runBattle"};
             PApplet.runSketch(args, new battleMain());
             surface.setVisible(false);
+            stop();
+        }
+        if (click_highScore) {
+            String[] args = {"runHighscore"};
+            PApplet.runSketch(args, new highscoreMenu());
+            surface.setVisible(false);
+            stop();
         }
     }
 
@@ -86,6 +92,12 @@ public class tankTitans extends PApplet {
             click_playGame = true;
         } else {
             click_playGame = false;
+        }
+
+        if ( overRect(b_highscore.getX(), b_highscore.getY(), b_highscore.getWidth(), b_highscore.getHeight()) ) {
+            click_highScore = true;
+        } else {
+            click_highScore = false;
         }
     }
 
