@@ -25,9 +25,9 @@ public class tankTitans extends PApplet {
      *  Round: Main Menu
      */
     private PImage bg_mainMenu;
-    private GUIButton b_playGame = new GUIButton(620, 180, 100, 75, Color.CYAN);
-    private GUIButton b_highscore = new GUIButton(620, 400, 100, 75, Color.CYAN);
-    private GUIButton b_exit = new GUIButton(620, 500, 100, 75, Color.CYAN);
+    private GUIButton b_playGame = new GUIButton("Play!",620, 180, 100, 75, Color.CYAN);
+    private GUIButton b_highscore = new GUIButton("Highscore",620, 400, 100, 75, Color.CYAN);
+    private GUIButton b_exit = new GUIButton("Exit",620, 500, 100, 75, Color.CYAN);
     private boolean click_playGame = false;
     private boolean click_highScore = false;
 
@@ -80,7 +80,7 @@ public class tankTitans extends PApplet {
         }
         if (click_highScore) {
             String[] args = {"runHighscore"};
-            PApplet.runSketch(args, new Highscore());
+            PApplet.runSketch(args, new highscoreMenu());
             surface.setVisible(false);
         }
     }

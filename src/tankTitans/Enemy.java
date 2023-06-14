@@ -5,9 +5,10 @@ import processing.core.PImage;
 
 public class Enemy extends Entity implements SpriteAnimation {
 
-    public Enemy(PImage[] idle, int x, int y, int res, int HP, int ATK, int DEF) {
+    public Enemy(PImage[] idle, PImage[] broken, int x, int y, int res, int HP, int ATK, int DEF) {
         super(HP, ATK, DEF, x, y);
         super.idle = idle;
+        super.broken = broken;
         super.timing = 3;
         super.frame = 0;
         super.total_frame = 4;
@@ -39,6 +40,10 @@ public class Enemy extends Entity implements SpriteAnimation {
         if(frame > total_frame - 1){
             frame = 0;
         }
-        app.image(this.idle[frame], x - (res / 2), y - (res / 2), res, res);
+        if (is_broken) {
+            app.image(this.broken[frame], x - (res / 2), y - (res / 2), res, res);
+        } else {
+            app.image(this.idle[frame], x - (res / 2), y - (res / 2), res, res);
+        }
     }
 }
