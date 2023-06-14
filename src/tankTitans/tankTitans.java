@@ -31,6 +31,7 @@ public class tankTitans extends PApplet {
     private boolean click_playGame = false;
     private boolean click_highScore = false;
 
+
     public static void main(String[] args) {
         // TODO code application logic here
         PApplet.main("tankTitans.tankTitans");
@@ -43,6 +44,8 @@ public class tankTitans extends PApplet {
     public void settings() {
         size(WIDTH, HEIGHT);
     }
+    String bip = "src/assets/sound/ostMain.wav";
+    public Sound pm = new Sound(bip);
 
     public void setup() {
         /* Backgrounds */
