@@ -77,11 +77,13 @@ public class tankTitans extends PApplet {
             String[] args = {"runBattle"};
             PApplet.runSketch(args, new battleMain());
             surface.setVisible(false);
+            stop();
         }
         if (click_highScore) {
             String[] args = {"runHighscore"};
             PApplet.runSketch(args, new highscoreMenu());
             surface.setVisible(false);
+            stop();
         }
     }
 
