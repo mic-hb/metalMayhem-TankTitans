@@ -69,18 +69,19 @@ public class Highscore extends PApplet {
      */
 
     public void draw() {
-        textSize(25);
-        fill(0);
-        textAlign(CENTER,CENTER);
-        text("Highscore niqqa", width/2, 100);
-
         if (is_highScore) {
             update(mouseX, mouseY, b_highscore);
-//            background(bg_highScore);
+            background(bg_highScore);
             fill(255, 245, 248);
             stroke(255, 245, 258);
             rect(b_highscore.getX(), b_highscore.getY(), b_highscore.getWidth(), b_highscore.getHeight());
         }
+
+        textSize(25);
+        fill(0);
+        textAlign(CENTER,CENTER);
+        text("Highscore!!!", width/2, 100);
+
     }
 
     public void keyPressed() {
