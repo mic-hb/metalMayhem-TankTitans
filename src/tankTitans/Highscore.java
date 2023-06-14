@@ -43,6 +43,25 @@ public class Highscore extends PApplet {
         /* Backgrounds */
         frameRate(FPS);
         bg_highScore = loadImage("src/assets/background/Main_Menu-1.png");
+    }
+
+    /**
+     * Main program
+     */
+
+    public void draw() {
+        if (is_highScore) {
+            update(mouseX, mouseY, b_highscore);
+            background(bg_highScore);
+            fill(255, 245, 248);
+            stroke(255, 245, 258);
+            rect(b_highscore.getX(), b_highscore.getY(), b_highscore.getWidth(), b_highscore.getHeight());
+        }
+
+        textSize(25);
+        fill(0);
+        textAlign(CENTER,CENTER);
+        text("Highscore!!!", width/2, 100);
         battleMain bm = new battleMain();
         loadTopScorers(topScorers);
         Scorer newScorer = new Scorer(bm.score);
@@ -62,25 +81,7 @@ public class Highscore extends PApplet {
             text("3. " + topScorers.get(2).toString(),width/2,250);
         }
         saveTopScorers(topScorers);
-    }
 
-    /**
-     * Main program
-     */
-
-    public void draw() {
-        textSize(25);
-        fill(0);
-        textAlign(CENTER,CENTER);
-        text("Highscore niqqa", width/2, 100);
-
-        if (is_highScore) {
-            update(mouseX, mouseY, b_highscore);
-//            background(bg_highScore);
-            fill(255, 245, 248);
-            stroke(255, 245, 258);
-            rect(b_highscore.getX(), b_highscore.getY(), b_highscore.getWidth(), b_highscore.getHeight());
-        }
     }
 
     public void keyPressed() {
