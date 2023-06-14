@@ -398,7 +398,7 @@ public class battleMain extends PApplet {
             if (has_won) {
                 args[0] = "winnerChickenDinner";
             }
-            PApplet.runSketch(args, new gameOver(args));
+            PApplet.runSketch(args, new gameOver(args, score));
             surface.setVisible(false);
             stop();
         }
