@@ -28,7 +28,7 @@ public class battleMain extends PApplet {
     private int pause_ctr = 0;
     private int pause_timer = 75;
     private double timer = 0;
-    private double score = 0;
+    public double score = 0;
 
     /* Rounds */
     private PImage bg_battle;
@@ -400,6 +400,9 @@ public class battleMain extends PApplet {
             }
             PApplet.runSketch(args, new gameOver(args, score));
             surface.setVisible(false);
+//            Highscore hs = new Highscore();
+//            Scorer newScorer = new Scorer(score);
+//            hs.topScorers.add(newScorer);
             stop();
         }
     }
