@@ -24,7 +24,7 @@ public class highscoreMenu extends PApplet {
     private int y1 = 150;
     private int y2 = 200;
     private int y3 = 250;
-    private GUIButton b_highscore = new GUIButton("Back",620, 400, 100, 75, Color.CYAN);
+    private GUIButton b_highscore = new GUIButton(620, 400, 100, 75);
     private boolean click_highScore = false;
     private static final String FILE_PATH = "listhighscores.txt";
     private static final int MAX_TOP_SCORERS = 3;

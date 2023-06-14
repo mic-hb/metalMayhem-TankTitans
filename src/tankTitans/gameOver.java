@@ -26,7 +26,7 @@ public class gameOver extends PApplet {
     private static final String FILE_PATH = "listhighscores.txt";
 
     private PImage bg_mainMenu;
-    private GUIButton textbox = new GUIButton("inputText", 640, 540, 461, 92, Color.WHITE);
+    private GUIButton textbox = new GUIButton(640, 540, 461, 92);
     private boolean click_playGame = false;
     private boolean enter_name = false;
     private int ctr = 0;

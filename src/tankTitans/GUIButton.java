@@ -8,13 +8,11 @@ public class GUIButton {
     private int width, height;
     private Color bg_color;
 
-    public GUIButton(String label, int x, int y, int width, int height, Color bg_color) {
-        this.label = label;
+    public GUIButton(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.bg_color = bg_color;
     }
 
     public String getLabel() {
