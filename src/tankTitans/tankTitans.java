@@ -94,6 +94,10 @@ public class tankTitans extends PApplet {
             surface.setVisible(false);
             stop();
         }
+        if (click_exit) {
+            surface.setVisible(false);
+            stop();
+        }
     }
 
     void update(int x, int y, GUIButton b) {
@@ -107,6 +111,12 @@ public class tankTitans extends PApplet {
             click_highScore = true;
         } else {
             click_highScore = false;
+        }
+
+        if ( overRect(b_exit.getX(), b_exit.getY(), b_exit.getWidth(), b_exit.getHeight()) ) {
+            click_exit = true;
+        } else {
+            click_exit = false;
         }
     }
 
