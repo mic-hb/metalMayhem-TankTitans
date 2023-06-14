@@ -43,25 +43,6 @@ public class Highscore extends PApplet {
         /* Backgrounds */
         frameRate(FPS);
         bg_highScore = loadImage("src/assets/background/Main_Menu-1.png");
-        battleMain bm = new battleMain();
-        loadTopScorers(topScorers);
-        Scorer newScorer = new Scorer(bm.score);
-        topScorers.add(newScorer);
-        topScorers.sort(Comparator.comparingDouble(Scorer::getScore).reversed());
-        if (topScorers.size() > MAX_TOP_SCORERS) {
-            topScorers = topScorers.subList(0, MAX_TOP_SCORERS);
-        }
-        if (topScorers.size() == 1) {
-            text("1. " + topScorers.get(0).toString(),width/2,150);
-        } else if (topScorers.size() == 2) {
-            text("1. " + topScorers.get(0).toString(),width/2,150);
-            text("2. " + topScorers.get(1).toString(),width/2,200);
-        } else {
-            text("1. " + topScorers.get(0).toString(),width/2,150);
-            text("2. " + topScorers.get(1).toString(),width/2,200);
-            text("3. " + topScorers.get(2).toString(),width/2,250);
-        }
-        saveTopScorers(topScorers);
     }
 
     /**
@@ -81,6 +62,25 @@ public class Highscore extends PApplet {
         fill(0);
         textAlign(CENTER,CENTER);
         text("Highscore!!!", width/2, 100);
+        battleMain bm = new battleMain();
+        loadTopScorers(topScorers);
+        Scorer newScorer = new Scorer(bm.score);
+        topScorers.add(newScorer);
+        topScorers.sort(Comparator.comparingDouble(Scorer::getScore).reversed());
+        if (topScorers.size() > MAX_TOP_SCORERS) {
+            topScorers = topScorers.subList(0, MAX_TOP_SCORERS);
+        }
+        if (topScorers.size() == 1) {
+            text("1. " + topScorers.get(0).toString(),width/2,150);
+        } else if (topScorers.size() == 2) {
+            text("1. " + topScorers.get(0).toString(),width/2,150);
+            text("2. " + topScorers.get(1).toString(),width/2,200);
+        } else {
+            text("1. " + topScorers.get(0).toString(),width/2,150);
+            text("2. " + topScorers.get(1).toString(),width/2,200);
+            text("3. " + topScorers.get(2).toString(),width/2,250);
+        }
+        saveTopScorers(topScorers);
 
     }
 
