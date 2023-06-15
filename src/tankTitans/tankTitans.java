@@ -29,9 +29,9 @@ public class tankTitans extends PApplet {
     private PImage HighScoreButton;
     private PImage ExitButton;
     private int buttonX, buttonY, buttonWidth, buttonHeight;
-        private GUIButton b_playGame = new GUIButton(640, 100, 393, 114);
-    private GUIButton b_highscore = new GUIButton(640, 275, 393, 114);
-    private GUIButton b_exit = new GUIButton(640, 450, 393, 114);
+        private GUIButton b_playGame = new GUIButton(640, 160, 393, 114);
+    private GUIButton b_highscore = new GUIButton(640, 335, 393, 114);
+    private GUIButton b_exit = new GUIButton(640, 510, 393, 114);
     private boolean click_playGame = false;
     private boolean click_highScore = false;
     private boolean click_exit = false;
@@ -68,9 +68,9 @@ public class tankTitans extends PApplet {
             fill(255, 245, 248);
             stroke(255, 245, 258);
 
-            image(PlayGameButton, b_playGame.getX() - (b_playGame.getWidth() / 2), b_playGame.getY());
-            image(HighScoreButton, b_highscore.getX() - (b_highscore.getWidth() / 2), b_highscore.getY());
-            image(ExitButton, b_exit.getX() - (b_exit.getWidth() / 2), b_exit.getY());
+            image(PlayGameButton, b_playGame.getX() - (b_playGame.getWidth() / 2), b_playGame.getY() - (b_playGame.getHeight() / 2));
+            image(HighScoreButton, b_highscore.getX() - (b_highscore.getWidth() / 2), b_highscore.getY() - (b_playGame.getHeight() / 2));
+            image(ExitButton, b_exit.getX() - (b_exit.getWidth() / 2), b_exit.getY() - (b_playGame.getHeight() / 2));
         }
     }
 
@@ -96,7 +96,7 @@ public class tankTitans extends PApplet {
         }
         if (click_exit) {
             surface.setVisible(false);
-            stop();
+            exit();
         }
     }
 
@@ -121,7 +121,7 @@ public class tankTitans extends PApplet {
     }
 
     private boolean overRect(int x, int y, int width, int height){
-        if (mouseX >= x - (width / 2) && mouseX <= x + (width / 2) && mouseY >= y && mouseY <= y + height) {
+        if (mouseX >= x - (width / 2) && mouseX <= x + (width / 2) && mouseY >= y - (height / 2) && mouseY <= y + (height / 2)) {
             return true;
         } else {
             return false;

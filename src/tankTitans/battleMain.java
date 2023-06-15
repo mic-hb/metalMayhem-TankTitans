@@ -5,6 +5,7 @@
 package tankTitans;
 
 import processing.core.PApplet;
+import processing.core.PFont;
 import processing.core.PImage;
 import java.util.ArrayList;
 import java.util.Formatter;
@@ -408,22 +409,38 @@ public class battleMain extends PApplet {
     }
 
     private void statsDisplay() {
-        textSize(16);
-        fill(0);
-        text("HP : " + p.getHP(), 48, 48);
-        fill(0);
-        text("ATK : " + p.getATK(), 48 + 72, 48);
-        fill(0);
-        text("Level : " + level, 48 + 72 + 192, 48);
-        fill(0);
-        text("fire_ctr : " + fire_ctr, 48 + 72 + 192 + 72, 48);
-        fill(0);
-        text("pause_ctr : " + pause_ctr, 48 + 72 + 192 + 72 + 128, 48);
+        try {
+            fill(255);
+            GUIButton b_HP = new GUIButton(148, 64, 100, 42);
+            rect(b_HP.getX() - (b_HP.getWidth() / 2), b_HP.getY() - (b_HP.getHeight() / 2), b_HP.getWidth(), b_HP.getHeight());
 
-        Formatter formatter = new Formatter();
-        formatter.format("%.2f", score);
-        textAlign(CENTER);
-        text(formatter.toString() + "s", 640, 48);
+            GUIButton b_TIMER = new GUIButton(WIDTH / 2, 64, 100, 42);
+            rect(b_TIMER.getX() - (b_TIMER.getWidth() / 2), b_TIMER.getY() - (b_TIMER.getHeight() / 2), b_TIMER.getWidth(), b_TIMER.getHeight());
+
+            PFont mono = createFont("src/assets/fonts/Segoe_UI_Bold.ttf", 16);
+            textFont(mono);
+            textSize(16);
+
+            fill(0);
+            textAlign(CENTER, CENTER);
+            text("HP : " + p.getHP(), b_HP.getX(), b_HP.getY());
+//
+//        fill(0);
+//        text("ATK : " + p.getATK(), 48 + 72, 48);
+//        fill(0);
+//        text("Level : " + level, 48 + 72 + 192, 48);
+//        fill(0);
+//        text("fire_ctr : " + fire_ctr, 48 + 72 + 192 + 72, 48);
+//        fill(0);
+//        text("pause_ctr : " + pause_ctr, 48 + 72 + 192 + 72 + 128, 48);
+
+            Formatter formatter = new Formatter();
+            formatter.format("%.2f", score);
+            textAlign(CENTER, CENTER);
+            text(formatter.toString() + "s", b_TIMER.getX(), b_TIMER.getY());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     private void testingFrame() {
