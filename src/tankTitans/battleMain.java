@@ -161,9 +161,6 @@ public class battleMain extends PApplet {
             temp_effect_blue[i] = loadImage("src/assets/effects/blue/(" + (i + 1) + ").png");
             temp_effect_red[i] = loadImage("src/assets/effects/red/(" + (i + 1) + ").png");
         }
-
-        /* Sounds */
-        pm_shoot.setup();
     }
 
     /**
@@ -591,7 +588,7 @@ public class battleMain extends PApplet {
             if (fire_ctr == fire_rate) {
                 if (bullets.size() <= max_bullet) {
                     pm_shoot.play();
-                    
+
                     is_firing = true;
                     effects.add(new Effects(temp_effect_red, p.getX() + 32, p.getY(), effect_res, 3));
                     bullets.add(new Bullet(temp_bullet, p.getX() + bullet_distance, p.getY(), player_bullet_res, p.getATK(), 1));
