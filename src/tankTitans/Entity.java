@@ -4,6 +4,7 @@
  */
 package tankTitans;
 
+import processing.core.PApplet;
 import processing.core.PImage;
 
 /**
@@ -64,5 +65,11 @@ public abstract class Entity {
 
     public boolean is_broken() {
         return is_broken;
+    }
+
+    public void movement(boolean up, boolean down, boolean left, boolean right) {
+    }
+
+    public void drawIdle(PApplet app, int frameCtr) {
     }
 }
