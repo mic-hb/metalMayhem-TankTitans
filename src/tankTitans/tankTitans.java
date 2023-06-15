@@ -8,10 +8,6 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import java.awt.*;
 
-
-/**
- * @author Michael
- */
 public class tankTitans extends PApplet {
     /* Default */
     private static final int WIDTH = 1280;

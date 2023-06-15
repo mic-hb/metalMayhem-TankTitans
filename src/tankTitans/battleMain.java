@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.Random;
 
-/**
- * @author RAFAEL MATTHEW
- */
 public class battleMain extends PApplet {
     /* Default */
     private static final int WIDTH = 1280;
@@ -89,6 +86,11 @@ public class battleMain extends PApplet {
     private boolean fire = false;
     private boolean boom = false;
 
+    /* Sounds */
+    PlayMusic pm_shoot = new PlayMusic("src/assets/sounds/paper-explosion.wav");
+    PlayMusic pm_hit = new PlayMusic("src/assets/sounds/hit-someting.wav");
+    PlayMusic pm_whoosh = new PlayMusic("src/assets/sounds/whoosh.wav");
+
     /* Cheats */
     private boolean killenemies = false;
 
@@ -159,6 +161,9 @@ public class battleMain extends PApplet {
             temp_effect_blue[i] = loadImage("src/assets/effects/blue/(" + (i + 1) + ").png");
             temp_effect_red[i] = loadImage("src/assets/effects/red/(" + (i + 1) + ").png");
         }
+
+        /* Sounds */
+        pm_shoot.setup();
     }
 
     /**
@@ -381,11 +386,16 @@ public class battleMain extends PApplet {
             for (int i = 0; i < enemy_rows; i++) {
 //                System.out.println("Enemy " + i);
 
-                if (level == 1) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192, y_spawn[i], enemy_res, 3, 1, 0, 1));
-                else if (level == 2) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 32, y_spawn[i], enemy_res, 3, 2, 0, 1));
-                else if (level == 3) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 32, y_spawn[i], enemy_res, 6, 2, 0, 1));
-                else if (level == 4) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 48, y_spawn[i], enemy_res, 6, 2, 0, 1));
-                else if (level >= 5) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 48, y_spawn[i], enemy_res, 10, 2, 0, 1));
+                if (level == 1)
+                    enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192, y_spawn[i], enemy_res, 3, 1, 0, 1));
+                else if (level == 2)
+                    enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 32, y_spawn[i], enemy_res, 3, 2, 0, 1));
+                else if (level == 3)
+                    enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 32, y_spawn[i], enemy_res, 6, 2, 0, 1));
+                else if (level == 4)
+                    enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 48, y_spawn[i], enemy_res, 6, 2, 0, 1));
+                else if (level >= 5)
+                    enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 48, y_spawn[i], enemy_res, 10, 2, 0, 1));
             }
 
             if (enemy_rows < 5) {
@@ -482,10 +492,10 @@ public class battleMain extends PApplet {
             game_over = true;
         }
 
-        if (p.getY() < 360 - (4 * 48) - 32) {
+        if (p.getY() < 360 - (4 * 48)) {
             up = false;
         }
-        if (p.getY() > 360 + (4 * 48) + 32) {
+        if (p.getY() > 360 + (4 * 48)) {
             down = false;
         }
         p.movement(up, down, left, right);
@@ -553,6 +563,8 @@ public class battleMain extends PApplet {
                     if (bullets_enemy.get(i).getY() >= bounding_top && bullets_enemy.get(i).getY() <= bounding_bottom) {
                         hit = true;
 
+                        pm_hit.play();
+
                         p.getHit(bullets_enemy.get(i).getATK());
                     }
                 }
@@ -578,6 +590,8 @@ public class battleMain extends PApplet {
         if (fire) {
             if (fire_ctr == fire_rate) {
                 if (bullets.size() <= max_bullet) {
+                    pm_shoot.play();
+                    
                     is_firing = true;
                     effects.add(new Effects(temp_effect_red, p.getX() + 32, p.getY(), effect_res, 3));
                     bullets.add(new Bullet(temp_bullet, p.getX() + bullet_distance, p.getY(), player_bullet_res, p.getATK(), 1));
@@ -608,6 +622,8 @@ public class battleMain extends PApplet {
                                 if (!enemies.get(j).is_broken()) {
                                     hit = true;
 
+                                    pm_hit.play();
+
                                     enemies.get(j).getHit(bullets.get(i).getATK());
                                     if (enemies.get(j).getHP() <= 0) {
                                         enemies.get(j).brokeDown();
@@ -621,6 +637,7 @@ public class battleMain extends PApplet {
                 /* Max distance */
                 if (bullets.get(i).getX() >= 1200) {
                     hit = true;
+                    pm_whoosh.play();
                 }
 
                 /* Kena dong BOOM */

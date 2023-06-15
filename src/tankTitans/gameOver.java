@@ -26,6 +26,8 @@ public class gameOver extends PApplet {
     private static final String FILE_PATH = "listhighscores.txt";
 
     private PImage bg_mainMenu;
+    private PImage PlayButton;
+    private PImage ExitButton;
     private GUIButton textbox = new GUIButton(640, 540, 461, 92);
     private GUIButton b_PLAY = new GUIButton(640, 450, 217, 96);
     private GUIButton b_EXIT = new GUIButton(640, 580, 217, 96);
@@ -60,6 +62,8 @@ public class gameOver extends PApplet {
         /* Backgrounds */
         frameRate(FPS);
         bg_mainMenu = loadImage("src/assets/background/background_1.png");
+        PlayButton = loadImage("src/assets/button/PlayAgain.png");
+        ExitButton = loadImage("src/assets/button/MainMenu.png");
     }
 
     /**
@@ -121,10 +125,8 @@ public class gameOver extends PApplet {
             textAlign(CENTER);
             text("GAME OVER", WIDTH/2, 280);
 
-            PImage ExitButton = loadImage("src/assets/button/MainMenu.png");
-            image(ExitButton, b_EXIT.getX() - (b_EXIT.getWidth() / 2), b_EXIT.getY() - (b_EXIT.getHeight() / 2));
-            PImage PlayButton = loadImage("src/assets/button/PlayAgain.png");
             image(PlayButton, b_PLAY.getX() - (b_PLAY.getWidth() / 2), b_PLAY.getY() - (b_PLAY.getHeight() / 2));
+            image(ExitButton, b_EXIT.getX() - (b_EXIT.getWidth() / 2), b_EXIT.getY() - (b_EXIT.getHeight() / 2));
         }
         if (args[0].equals("winnerChickenDinner")) {
             Formatter formatted = new Formatter();
