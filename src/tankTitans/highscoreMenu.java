@@ -3,7 +3,6 @@ package tankTitans;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -21,11 +20,12 @@ public class highscoreMenu extends PApplet {
      *  Round: High Score
      */
     private PImage bg_highScore;
+    private PImage BackButton;
     private int y1 = 150;
     private int y2 = 200;
     private int y3 = 250;
-    private GUIButton b_highscore;
-    private boolean click_highScore = false;
+    private GUIButton b_BACK;
+    private boolean click_backButton = false;
     private static final String FILE_PATH = "listhighscores.txt";
     private static final int MAX_TOP_SCORERS = 3;
     public List<Highscore> topHighscores = new ArrayList<>();
@@ -47,7 +47,8 @@ public class highscoreMenu extends PApplet {
         frameRate(FPS);
         bg_highScore = loadImage("src/assets/background/Main_Menu-1.png");
         loadTopScorers(topHighscores);
-        b_highscore = new GUIButton(640, 720 - 180, 393, 114);
+        b_BACK = new GUIButton(640, 720 - 180, 368, 96);
+        BackButton = loadImage("src/assets/button/BackButton_.png");
     }
 
     /**
@@ -56,7 +57,7 @@ public class highscoreMenu extends PApplet {
 
     public void draw() {
         if (is_highScore) {
-            update(mouseX, mouseY, b_highscore);
+            update(mouseX, mouseY, b_BACK);
             background(bg_highScore);
 
             backButton();
@@ -94,7 +95,8 @@ public class highscoreMenu extends PApplet {
     private void backButton() {
         fill(25, 24, 24);
         stroke(255, 245, 258);
-        rect(b_highscore.getX() - (b_highscore.getWidth() / 2), b_highscore.getY() - (b_highscore.getHeight() / 2), b_highscore.getWidth(), b_highscore.getHeight());
+//        rect(b_BACK.getX() - (b_BACK.getWidth() / 2), b_BACK.getY() - (b_BACK.getHeight() / 2), b_BACK.getWidth(), b_BACK.getHeight());
+        image(BackButton, b_BACK.getX() - (b_BACK.getWidth() / 2), b_BACK.getY() - (b_BACK.getHeight() / 2));
     }
 
     public void keyPressed() {
@@ -104,7 +106,7 @@ public class highscoreMenu extends PApplet {
     }
 
     public void mousePressed(){
-        if (click_highScore) {
+        if (click_backButton) {
             String[] args = {"runHighscore"};
             PApplet.runSketch(args, new tankTitans());
             surface.setVisible(false);
@@ -113,10 +115,10 @@ public class highscoreMenu extends PApplet {
     }
 
     void update(int x, int y, GUIButton b) {
-        if ( overRect(b_highscore.getX(), b_highscore.getY(), b_highscore.getWidth(), b_highscore.getHeight()) ) {
-            click_highScore = true;
+        if ( overRect(b_BACK.getX(), b_BACK.getY(), b_BACK.getWidth(), b_BACK.getHeight()) ) {
+            click_backButton = true;
         } else {
-            click_highScore = false;
+            click_backButton = false;
         }
     }
 

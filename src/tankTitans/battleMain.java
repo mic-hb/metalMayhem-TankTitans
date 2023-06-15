@@ -90,7 +90,6 @@ public class battleMain extends PApplet {
     PlayMusic pm_shoot = new PlayMusic("src/assets/sounds/paper-explosion.wav");
     PlayMusic pm_hit = new PlayMusic("src/assets/sounds/hit-someting.wav");
     PlayMusic pm_whoosh = new PlayMusic("src/assets/sounds/whoosh.wav");
-    PlayMusic pm_bgm = new PlayMusic("src/assets/sounds/battle_music.wav");
 
     /* Cheats */
     private boolean killenemies = false;
@@ -162,9 +161,6 @@ public class battleMain extends PApplet {
             temp_effect_blue[i] = loadImage("src/assets/effects/blue/(" + (i + 1) + ").png");
             temp_effect_red[i] = loadImage("src/assets/effects/red/(" + (i + 1) + ").png");
         }
-
-        /* Sound */
-        pm_bgm.play();
     }
 
     /**
@@ -218,6 +214,7 @@ public class battleMain extends PApplet {
                 explosions.remove(i);
                 break;
             } else {
+//                System.out.println("MELEDAK!!");
                 explosions.get(i).drawIdle(this, frame_ctr);
             }
         }
@@ -384,6 +381,8 @@ public class battleMain extends PApplet {
 //            }
 
             for (int i = 0; i < enemy_rows; i++) {
+//                System.out.println("Enemy " + i);
+
                 if (level == 1)
                     enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192, y_spawn[i], enemy_res, 3, 1, 0, 1));
                 else if (level == 2)
@@ -420,7 +419,6 @@ public class battleMain extends PApplet {
 //            Highscore hs = new Highscore();
 //            Scorer newScorer = new Scorer(score);
 //            hs.topScorers.add(newScorer);
-            pm_bgm.stop();
             stop();
         }
     }
@@ -538,6 +536,7 @@ public class battleMain extends PApplet {
                 int bullet_distance = 3;
                 if (fire_chance >= 1 && fire_chance <= 1) {
                     bullets_enemy.add(new BulletEnemy(temp_bullet, enemies.get(i).getX() - bullet_distance, enemies.get(i).getY(), enemy_bullet_res, enemies.get(i).getATK(), 1));
+//                    System.out.println("Dor dor");
                 }
             }
         }
@@ -549,6 +548,7 @@ public class battleMain extends PApplet {
 
                 /* Cek terkena musuh */
                 boolean hit = false;
+//                System.out.println("Hitbox " + i + ", " + j);
 
                 /* Penentuan hitbox */
                 int bounding_left = p.getX() - p.getRes() / 2;
@@ -560,7 +560,7 @@ public class battleMain extends PApplet {
                     if (bullets_enemy.get(i).getY() >= bounding_top && bullets_enemy.get(i).getY() <= bounding_bottom) {
                         hit = true;
 
-                        pm_hit.playOnce();
+                        pm_hit.play();
 
                         p.getHit(bullets_enemy.get(i).getATK());
                     }
@@ -575,6 +575,7 @@ public class battleMain extends PApplet {
                 if (hit) {
                     explosions.add(new Explosion(temp_explosion, bullets_enemy.get(i).getX(), bullets_enemy.get(i).getY(), explosion_res, 8));
                     bullets_enemy.remove(i);
+//                    System.out.println("DUARRRRR!!!!! kenek kon thoel");
                 }
             }
         }
@@ -586,12 +587,13 @@ public class battleMain extends PApplet {
         if (fire) {
             if (fire_ctr == fire_rate) {
                 if (bullets.size() <= max_bullet) {
-                    pm_shoot.playOnce();
+                    pm_shoot.play();
 
                     is_firing = true;
                     effects.add(new Effects(temp_effect_red, p.getX() + 32, p.getY(), effect_res, 3));
                     bullets.add(new Bullet(temp_bullet, p.getX() + bullet_distance, p.getY(), player_bullet_res, p.getATK(), 1));
                 }
+//                System.out.println("Test");
                 fire = false;
             }
         }
@@ -605,6 +607,7 @@ public class battleMain extends PApplet {
                 boolean hit = false;
                 if (enemies.size() > 0) {
                     for (int j = enemies.size() - 1; j >= 0; j--) {
+//                        System.out.println("Hitbox " + i + ", " + j);
                         /* Penentuan hitbox */
                         int bounding_left = enemies.get(j).getX() - enemies.get(j).getRes() / 2 / 2;
                         int bounding_right = enemies.get(j).getX() + enemies.get(j).getRes() / 2 / 2;
@@ -616,7 +619,7 @@ public class battleMain extends PApplet {
                                 if (!enemies.get(j).is_broken()) {
                                     hit = true;
 
-                                    pm_hit.playOnce();
+                                    pm_hit.play();
 
                                     enemies.get(j).getHit(bullets.get(i).getATK());
                                     if (enemies.get(j).getHP() <= 0) {
@@ -631,13 +634,14 @@ public class battleMain extends PApplet {
                 /* Max distance */
                 if (bullets.get(i).getX() >= 1200) {
                     hit = true;
-                    pm_whoosh.playOnce();
+                    pm_whoosh.play();
                 }
 
                 /* Kena dong BOOM */
                 if (hit) {
                     explosions.add(new Explosion(temp_explosion, bullets.get(i).getX(), bullets.get(i).getY(), explosion_res, 8));
                     bullets.remove(i);
+//                    System.out.println("DUARRRRR!!!!!, enemy sisa " + enemies.size());
                 }
             }
         }
