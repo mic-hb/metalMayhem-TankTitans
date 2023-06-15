@@ -28,10 +28,11 @@ public class tankTitans extends PApplet {
     private PImage PlayGameButton;
     private PImage HighScoreButton;
     private PImage ExitButton;
+    private PImage logo;
     private int buttonX, buttonY, buttonWidth, buttonHeight;
-    private GUIButton b_playGame = new GUIButton(640, 160, 393, 114);
-    private GUIButton b_highscore = new GUIButton(640, 335, 393, 114);
-    private GUIButton b_exit = new GUIButton(640, 510, 393, 114);
+    private GUIButton b_playGame = new GUIButton(640, 350, 221, 64);
+    private GUIButton b_highscore = new GUIButton(640, 450, 221, 64);
+    private GUIButton b_exit = new GUIButton(640, 550, 221, 64);
     private boolean click_playGame = false;
     private boolean click_highScore = false;
     private boolean click_exit = false;
@@ -53,9 +54,10 @@ public class tankTitans extends PApplet {
         /* Backgrounds */
         frameRate(FPS);
         bg_mainMenu = loadImage("src/assets/background/Main_Menu-1.png");
-        PlayGameButton = loadImage("src/assets/button/PlayGameButton_.png");
-        HighScoreButton = loadImage("src/assets/button/HighScoreButton_.png");
-        ExitButton = loadImage("src/assets/button/ExitButton_.png");
+        PlayGameButton = loadImage("src/assets/button/PlayGameButton.png");
+        HighScoreButton = loadImage("src/assets/button/HighScoreButton.png");
+        ExitButton = loadImage("src/assets/button/ExitButton.png");
+        logo = loadImage("src/assets/button/logo_1.png");
     }
 
     /**
@@ -71,6 +73,7 @@ public class tankTitans extends PApplet {
             image(PlayGameButton, b_playGame.getX() - (b_playGame.getWidth() / 2), b_playGame.getY() - (b_playGame.getHeight() / 2));
             image(HighScoreButton, b_highscore.getX() - (b_highscore.getWidth() / 2), b_highscore.getY() - (b_playGame.getHeight() / 2));
             image(ExitButton, b_exit.getX() - (b_exit.getWidth() / 2), b_exit.getY() - (b_playGame.getHeight() / 2));
+            image(logo, 640 - (640 / 2), 150 - (201 / 2));
         }
     }
 

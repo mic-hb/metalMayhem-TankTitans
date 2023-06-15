@@ -27,8 +27,8 @@ public class gameOver extends PApplet {
 
     private PImage bg_mainMenu;
     private GUIButton textbox = new GUIButton(640, 540, 461, 92);
-    private GUIButton b_PLAY = new GUIButton(640, 450, 393, 114);
-    private GUIButton b_EXIT = new GUIButton(640, 580, 393, 114);
+    private GUIButton b_PLAY = new GUIButton(640, 450, 217, 96);
+    private GUIButton b_EXIT = new GUIButton(640, 580, 217, 96);
     private boolean click_playGame = false;
     private boolean click_exitgame = false;
     private boolean enter_name = false;
@@ -121,11 +121,9 @@ public class gameOver extends PApplet {
             textAlign(CENTER);
             text("GAME OVER", WIDTH/2, 280);
 
-            PImage ExitButton;
-            ExitButton = loadImage("src/assets/button/ExitButton_.png");
+            PImage ExitButton = loadImage("src/assets/button/MainMenu.png");
             image(ExitButton, b_EXIT.getX() - (b_EXIT.getWidth() / 2), b_EXIT.getY() - (b_EXIT.getHeight() / 2));
-            PImage PayButton;
-            PImage PlayButton = loadImage("src/assets/button/PlayGameButton_.png");
+            PImage PlayButton = loadImage("src/assets/button/PlayAgain.png");
             image(PlayButton, b_PLAY.getX() - (b_PLAY.getWidth() / 2), b_PLAY.getY() - (b_PLAY.getHeight() / 2));
         }
         if (args[0].equals("winnerChickenDinner")) {
@@ -175,7 +173,16 @@ public class gameOver extends PApplet {
 
     public void mousePressed(){
         if (click_exitgame) {
-            is_mainMenu = false;
+            String[] args = {"mainMenu"};
+            PApplet.runSketch(args, new tankTitans());
+            surface.setVisible(false);
+            stop();
+        }
+        if (click_playGame) {
+            String[] args = {"runBattle"};
+            PApplet.runSketch(args, new battleMain());
+            surface.setVisible(false);
+            stop();
         }
     }
 
