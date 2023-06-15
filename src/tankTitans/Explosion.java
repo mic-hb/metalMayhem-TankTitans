@@ -5,12 +5,11 @@ import processing.core.PImage;
 
 public class Explosion extends Entity implements SpriteAnimation {
     private boolean finished;
-    public Explosion(PImage[] idle, int x, int y, int res) {
-        super(0, 0, 0, x, y);
+    public Explosion(PImage[] idle, int x, int y, int res, int total_frame) {
+        super(0, 0, 0, x, y, total_frame);
         super.idle = idle;
         super.timing = 3;
         super.frame = 0;
-        super.total_frame = 8;
         super.reset_frame = -1;
         super.res = res;
         this.finished = false;

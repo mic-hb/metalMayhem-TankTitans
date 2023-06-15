@@ -7,13 +7,12 @@ public class Player extends Entity implements SpriteAnimation {
     protected String nama;
     protected int movement_speed;
 
-    public Player(PImage[] idle, PImage[] broken, int x, int y, int res) {
-        super(20, 3, 0, x, y);
+    public Player(PImage[] idle, PImage[] broken, int x, int y, int res, int total_frame) {
+        super(20, 3, 0, x, y, total_frame);
         super.idle = idle;
         super.broken = broken;
         super.timing = 3;
         super.frame = 0;
-        super.total_frame = 4;
         super.reset_frame = -1;
         super.res = res;
 //        this.movement_speed = 32 + 16;

@@ -24,13 +24,14 @@ public abstract class Entity {
     protected int total_frame;
     protected int reset_frame;
 
-    public Entity(int HP, int ATK, int DEF, int x, int y) {
+    public Entity(int HP, int ATK, int DEF, int x, int y, int total_frame) {
         this.HP = HP;
         this.ATK = ATK;
         this.DEF = DEF;
         this.x = x;
         this.y = y;
         this.is_broken = false;
+        this.total_frame = total_frame;
     }
 
     public void brokeDown() {
