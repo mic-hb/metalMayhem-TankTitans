@@ -29,7 +29,7 @@ public class tankTitans extends PApplet {
     private PImage HighScoreButton;
     private PImage ExitButton;
     private int buttonX, buttonY, buttonWidth, buttonHeight;
-        private GUIButton b_playGame = new GUIButton(640, 160, 393, 114);
+    private GUIButton b_playGame = new GUIButton(640, 160, 393, 114);
     private GUIButton b_highscore = new GUIButton(640, 335, 393, 114);
     private GUIButton b_exit = new GUIButton(640, 510, 393, 114);
     private boolean click_playGame = false;

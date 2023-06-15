@@ -475,6 +475,13 @@ public class battleMain extends PApplet {
     }
 
     private void playerMechanism() {
+        if (p.getHP() <= 0) {
+            p.brokeDown();
+            is_paused = true;
+//                            is_battle = false;
+            game_over = true;
+        }
+
         if (p.getY() < 360 - (4 * 48) - 32) {
             up = false;
         }
@@ -547,12 +554,6 @@ public class battleMain extends PApplet {
                         hit = true;
 
                         p.getHit(bullets_enemy.get(i).getATK());
-                        if (p.getHP() <= 0) {
-                            p.brokeDown();
-                            is_paused = true;
-//                            is_battle = false;
-                            game_over = true;
-                        }
                     }
                 }
 
@@ -664,6 +665,9 @@ public class battleMain extends PApplet {
             }
             if (key == 'q') {
                 killenemies = true;
+            }
+            if (key == 'l') {
+                p.HP = 0;
             }
         }
     }
