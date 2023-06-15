@@ -25,12 +25,16 @@ public class tankTitans extends PApplet {
      *  Round: Main Menu
      */
     private PImage bg_mainMenu;
-    private GUIButton b_playGame = new GUIButton(620, 180, 100, 75, Color.CYAN);
-    private GUIButton b_highscore = new GUIButton(620, 400, 100, 75, Color.CYAN);
-    private GUIButton b_exit = new GUIButton(620, 500, 100, 75, Color.CYAN);
+    private PImage PlayGameButton;
+    private PImage HighScoreButton;
+    private PImage ExitButton;
+    private int buttonX, buttonY, buttonWidth, buttonHeight;
+        private GUIButton b_playGame = new GUIButton(640, 100, 393, 114);
+    private GUIButton b_highscore = new GUIButton(640, 275, 393, 114);
+    private GUIButton b_exit = new GUIButton(640, 450, 393, 114);
     private boolean click_playGame = false;
     private boolean click_highScore = false;
-
+    private boolean click_exit = false;
 
     public static void main(String[] args) {
         // TODO code application logic here
@@ -44,13 +48,14 @@ public class tankTitans extends PApplet {
     public void settings() {
         size(WIDTH, HEIGHT);
     }
-    String bip = "src/assets/sound/ostMain.wav";
-    public Sound pm = new Sound(bip);
 
     public void setup() {
         /* Backgrounds */
         frameRate(FPS);
         bg_mainMenu = loadImage("src/assets/background/Main_Menu-1.png");
+        PlayGameButton = loadImage("src/assets/button/PlayGameButton_.png");
+        HighScoreButton = loadImage("src/assets/button/HighScoreButton_.png");
+        ExitButton = loadImage("src/assets/button/ExitButton_.png");
     }
 
     /**
@@ -63,9 +68,9 @@ public class tankTitans extends PApplet {
             fill(255, 245, 248);
             stroke(255, 245, 258);
 
-            rect(b_playGame.getX(), b_playGame.getY(), b_playGame.getWidth(), b_playGame.getHeight());
-            rect(b_highscore.getX(), b_highscore.getY(), b_highscore.getWidth(), b_highscore.getHeight());
-            rect(b_exit.getX(), b_exit.getY(), b_exit.getWidth(), b_exit.getHeight());
+            image(PlayGameButton, b_playGame.getX() - (b_playGame.getWidth() / 2), b_playGame.getY());
+            image(HighScoreButton, b_highscore.getX() - (b_highscore.getWidth() / 2), b_highscore.getY());
+            image(ExitButton, b_exit.getX() - (b_exit.getWidth() / 2), b_exit.getY());
         }
     }
 
@@ -76,15 +81,22 @@ public class tankTitans extends PApplet {
     }
 
     public void mousePressed(){
+
         if (click_playGame) {
             String[] args = {"runBattle"};
             PApplet.runSketch(args, new battleMain());
             surface.setVisible(false);
+            stop();
         }
         if (click_highScore) {
             String[] args = {"runHighscore"};
             PApplet.runSketch(args, new highscoreMenu());
             surface.setVisible(false);
+            stop();
+        }
+        if (click_exit) {
+            surface.setVisible(false);
+            stop();
         }
     }
 
@@ -100,10 +112,16 @@ public class tankTitans extends PApplet {
         } else {
             click_highScore = false;
         }
+
+        if ( overRect(b_exit.getX(), b_exit.getY(), b_exit.getWidth(), b_exit.getHeight()) ) {
+            click_exit = true;
+        } else {
+            click_exit = false;
+        }
     }
 
     private boolean overRect(int x, int y, int width, int height){
-        if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
+        if (mouseX >= x - (width / 2) && mouseX <= x + (width / 2) && mouseY >= y && mouseY <= y + height) {
             return true;
         } else {
             return false;

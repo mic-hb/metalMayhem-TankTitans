@@ -109,7 +109,7 @@ public class battleMain extends PApplet {
         frameRate(FPS);
 
         /* Backgrounds */
-//        bg_mainMenu = loadImage("src/assets/background/background_1.png");
+        bg_battle = loadImage("src/assets/battlefield/6.png");
 
         /* Player */
         PImage[] temp_player = new PImage[4];

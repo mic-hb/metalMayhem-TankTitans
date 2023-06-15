@@ -3,7 +3,10 @@ package tankTitans;
 import processing.core.PApplet;
 import processing.core.PImage;
 import java.awt.*;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Formatter;
+import java.util.List;
 
 /**
  * @author Michael
@@ -15,20 +18,22 @@ public class gameOver extends PApplet {
     private static final int HEIGHT = 720;
     private static final int FPS = 60;
 
-    /* Rounds */
+    /* Game Over Menu */
     private boolean is_mainMenu = true;
-    private double score;
     private String inputText = "";
+    private double score;
+    public List<Highscore> listHighscores = new ArrayList<>();
+    private static final String FILE_PATH = "listhighscores.txt";
+
+    private PImage bg_mainMenu;
+    private GUIButton textbox = new GUIButton(640, 540, 461, 92);
+    private boolean click_playGame = false;
+    private boolean enter_name = false;
+    private int ctr = 0;
 
     /**
-     *  Round: Main Menu
+     *  Round: Game Over
      */
-    private PImage bg_mainMenu;
-    private GUIButton textbox = new GUIButton( 640, 540, 461, 92, Color.WHITE);
-//    private GUIButton b_highscore = new GUIButton("", 620, 400, 100, 75, Color.CYAN);
-//    private GUIButton b_exit = new GUIButton("", 620, 500, 100, 75, Color.CYAN);
-    private boolean click_playGame = false;
-    private int ctr = 0;
 
 //    public static void main(String[] args) {
 //        // TODO code application logic here
@@ -71,10 +76,38 @@ public class gameOver extends PApplet {
 //                is_mainMenu = false;
             }
         } else {
+            if (enter_name) {
+                subLoadFile(listHighscores);
+                System.out.println(listHighscores);
+                listHighscores.add(new Highscore(inputText, score));
+                subSaveFile(listHighscores);
+                System.out.println(listHighscores);
+                System.out.println("Berhasil save highscore!");
+            }
+
             String[] args = {"mainMenu"};
             PApplet.runSketch(args, new tankTitans());
             surface.setVisible(false);
             stop();
+        }
+    }
+
+    private void subLoadFile(List<Highscore> topHighscores) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
+            topHighscores.addAll((List<Highscore>) ois.readObject());
+            System.out.println("Berhasil load file");
+        } catch (IOException | ClassNotFoundException e) {
+            // Ignore if the file doesn't exist or there's an error reading from it
+        }
+    }
+
+    private void subSaveFile(List<Highscore> topHighscores) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
+            oos.writeObject(topHighscores);
+            System.out.println("Berhasil save file");
+            oos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -88,6 +121,7 @@ public class gameOver extends PApplet {
         if (args[0].equals("winnerChickenDinner")) {
             Formatter formatted = new Formatter();
             formatted.format("%.2f", score);
+            score = Double.valueOf(formatted.toString());
             textSize(128);
             textAlign(CENTER, CENTER);
             text("YOU WIN", 640, 256);
@@ -102,6 +136,8 @@ public class gameOver extends PApplet {
                 textSize(text_size);
                 textAlign(CENTER, CENTER);
                 text(inputText, textbox.getX(), textbox.getY() - 8);
+
+                Highscore newHighscore = new Highscore(inputText, score);
             } else {
                 fill(100);
                 textSize((float) (text_size * 0.8));
@@ -113,11 +149,14 @@ public class gameOver extends PApplet {
 
     public void keyPressed() {
         if (key != ENTER && key != BACKSPACE && key != SHIFT && key != CONTROL && key != ALT) {
-            if (inputText.length() < 5) {
+            if (inputText.length() < 7) {
                 inputText += key;
             }
         } else if (key == BACKSPACE && inputText.length() > 0) {
             inputText = inputText.substring(0, inputText.length() - 1);
+        } else if (key == ENTER && inputText.length() > 0) {
+            is_mainMenu = false;
+            enter_name = true;
         }
     }
 
@@ -125,16 +164,11 @@ public class gameOver extends PApplet {
     }
 
     public void mousePressed(){
-        if (click_playGame) {
-
-        }
     }
 
     void update(int x, int y, GUIButton b) {
         if ( overRect(textbox.getX(), textbox.getY(), textbox.getWidth(), textbox.getHeight()) ) {
-//            click_playGame = true;
         } else {
-//            click_playGame = false;
         }
     }
 
