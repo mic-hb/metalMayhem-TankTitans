@@ -5,24 +5,22 @@ import processing.core.PImage;
 
 public class Enemy extends Entity implements SpriteAnimation {
 
-    public Enemy(PImage[] idle, PImage[] broken, int x, int y, int res, int HP, int ATK, int DEF) {
-        super(HP, ATK, DEF, x, y);
+    public Enemy(PImage[] idle, PImage[] broken, int x, int y, int res, int HP, int ATK, int DEF, int total_frame) {
+        super(HP, ATK, DEF, x, y, total_frame);
         super.idle = idle;
         super.broken = broken;
         super.timing = 3;
         super.frame = 0;
-        super.total_frame = 4;
         super.reset_frame = -1;
         super.res = res;
         System.out.println("at " + x + ", " + y);
     }
 
-    public Enemy(PImage[] idle, int x, int y, int res) {
-        super(3, 1, 0, x, y);
+    public Enemy(PImage[] idle, int x, int y, int res, int total_frame) {
+        super(3, 1, 0, x, y, total_frame);
         super.idle = idle;
         super.timing = 3;
         super.frame = 0;
-        super.total_frame = 4;
         super.reset_frame = -1;
         super.res = res;
         System.out.println("at " + x + ", " + y);

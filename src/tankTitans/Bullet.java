@@ -7,12 +7,11 @@ public class Bullet extends Entity implements SpriteAnimation {
     protected int bullet_speed = 15;
     protected int bullet_timing = 0;
 
-    public Bullet(PImage[] idle, int x, int y, int res, int ATK) {
-        super(0, ATK, 0, x, y);
+    public Bullet(PImage[] idle, int x, int y, int res, int ATK, int total_frame) {
+        super(0, ATK, 0, x, y, total_frame);
         super.idle = idle;
         super.timing = 3;
         super.frame = 0;
-        super.total_frame = 1;
         super.reset_frame = -1;
         super.res = res;
     }

@@ -27,7 +27,10 @@ public class gameOver extends PApplet {
 
     private PImage bg_mainMenu;
     private GUIButton textbox = new GUIButton(640, 540, 461, 92);
+    private GUIButton b_PLAY = new GUIButton(640, 450, 393, 114);
+    private GUIButton b_EXIT = new GUIButton(640, 580, 393, 114);
     private boolean click_playGame = false;
+    private boolean click_exitgame = false;
     private boolean enter_name = false;
     private int ctr = 0;
 
@@ -116,7 +119,14 @@ public class gameOver extends PApplet {
             textSize(128);
 //            fill(0, 408, 612);
             textAlign(CENTER);
-            text("GAME OVER", 640, 360);
+            text("GAME OVER", WIDTH/2, 280);
+
+            PImage ExitButton;
+            ExitButton = loadImage("src/assets/button/ExitButton_.png");
+            image(ExitButton, b_EXIT.getX() - (b_EXIT.getWidth() / 2), b_EXIT.getY() - (b_EXIT.getHeight() / 2));
+            PImage PayButton;
+            PImage PlayButton = loadImage("src/assets/button/PlayGameButton_.png");
+            image(PlayButton, b_PLAY.getX() - (b_PLAY.getWidth() / 2), b_PLAY.getY() - (b_PLAY.getHeight() / 2));
         }
         if (args[0].equals("winnerChickenDinner")) {
             Formatter formatted = new Formatter();
@@ -164,16 +174,26 @@ public class gameOver extends PApplet {
     }
 
     public void mousePressed(){
+        if (click_exitgame) {
+            is_mainMenu = false;
+        }
     }
 
     void update(int x, int y, GUIButton b) {
-        if ( overRect(textbox.getX(), textbox.getY(), textbox.getWidth(), textbox.getHeight()) ) {
+        if (overRect(b_EXIT.getX(), b_EXIT.getY(), b_EXIT.getWidth(), b_EXIT.getHeight())) {
+            click_exitgame = true;
         } else {
+            click_exitgame = false;
+        }
+        if (overRect(b_PLAY.getX(), b_PLAY.getY(), b_PLAY.getWidth(), b_PLAY.getHeight())) {
+            click_playGame = true;
+        } else {
+            click_playGame = false;
         }
     }
 
     private boolean overRect(int x, int y, int width, int height){
-        if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
+        if (mouseX >= x - (width / 2) && mouseX <= x + (width / 2) && mouseY >= y - (height / 2) && mouseY <= y + (height / 2)) {
             return true;
         } else {
             return false;

@@ -24,7 +24,7 @@ public class highscoreMenu extends PApplet {
     private int y1 = 150;
     private int y2 = 200;
     private int y3 = 250;
-    private GUIButton b_highscore = new GUIButton(620, 400, 100, 75);
+    private GUIButton b_highscore;
     private boolean click_highScore = false;
     private static final String FILE_PATH = "listhighscores.txt";
     private static final int MAX_TOP_SCORERS = 3;
@@ -47,6 +47,7 @@ public class highscoreMenu extends PApplet {
         frameRate(FPS);
         bg_highScore = loadImage("src/assets/background/Main_Menu-1.png");
         loadTopScorers(topHighscores);
+        b_highscore = new GUIButton(640, 720 - 180, 393, 114);
     }
 
     /**
@@ -57,9 +58,9 @@ public class highscoreMenu extends PApplet {
         if (is_highScore) {
             update(mouseX, mouseY, b_highscore);
             background(bg_highScore);
-            fill(255, 245, 248);
-            stroke(255, 245, 258);
-            rect(b_highscore.getX(), b_highscore.getY(), b_highscore.getWidth(), b_highscore.getHeight());
+
+            backButton();
+
             textSize(25);
             fill(0);
             textAlign(CENTER,CENTER);
@@ -90,6 +91,12 @@ public class highscoreMenu extends PApplet {
         }
     }
 
+    private void backButton() {
+        fill(25, 24, 24);
+        stroke(255, 245, 258);
+        rect(b_highscore.getX() - (b_highscore.getWidth() / 2), b_highscore.getY() - (b_highscore.getHeight() / 2), b_highscore.getWidth(), b_highscore.getHeight());
+    }
+
     public void keyPressed() {
     }
 
@@ -114,7 +121,7 @@ public class highscoreMenu extends PApplet {
     }
 
     private boolean overRect(int x, int y, int width, int height){
-        if (mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height) {
+        if (mouseX >= x - (width / 2) && mouseX <= x + (width / 2) && mouseY >= y - (height / 2) && mouseY <= y + (height / 2)) {
             return true;
         } else {
             return false;

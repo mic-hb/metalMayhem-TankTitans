@@ -5,6 +5,7 @@
 package tankTitans;
 
 import processing.core.PApplet;
+import processing.core.PFont;
 import processing.core.PImage;
 import java.util.ArrayList;
 import java.util.Formatter;
@@ -61,7 +62,7 @@ public class battleMain extends PApplet {
     private int enemy_res = 64;
     private ArrayList<BulletEnemy> bullets_enemy;
     private PImage[] temp_bullet_enemy;
-    private int enemy_bullet_res = 32;
+    private int enemy_bullet_res = 64;
 
     /* Explosion */
     private ArrayList<Explosion> explosions;
@@ -109,28 +110,28 @@ public class battleMain extends PApplet {
         frameRate(FPS);
 
         /* Backgrounds */
-//        bg_mainMenu = loadImage("src/assets/background/background_1.png");
+        bg_battle = loadImage("src/assets/battlefield/6.png");
 
         /* Player */
-        PImage[] temp_player = new PImage[4];
-        PImage[] temp_player_broken = new PImage[4];
+        PImage[] temp_player = new PImage[1];
+        PImage[] temp_player_broken = new PImage[1];
         for (int i = 0; i < temp_player.length; i++) {
             temp_player[i] = loadImage("src/assets/player/Idle/(" + (i + 1) + ").png");
             temp_player_broken[i] = loadImage("src/assets/player/broken/(" + (i + 1) + ").png");
         }
-        p = new Player(temp_player, temp_player_broken, 192, 360, player_res);
+        p = new Player(temp_player, temp_player_broken, 192, 360, player_res, 1);
 
         /* Bullets */
         bullets = new ArrayList<>();
-        temp_bullet = new PImage[3];
+        temp_bullet = new PImage[1];
         for (int i = 0; i < temp_bullet.length; i++) {
             temp_bullet[i] = loadImage("src/assets/bullet/Idle/(" + (i + 1) + ").png");
         }
 
         /* Enemy */
         enemies = new ArrayList<>();
-        temp_enemy = new PImage[4];
-        temp_enemy_broken = new PImage[4];
+        temp_enemy = new PImage[1];
+        temp_enemy_broken = new PImage[1];
         for (int i = 0; i < temp_enemy.length; i++) {
             temp_enemy[i] = loadImage("src/assets/enemy/Idle/(" + (i + 1) + ").png");
             temp_enemy_broken[i] = loadImage("src/assets/enemy/broken/(" + (i + 1) + ").png");
@@ -138,7 +139,7 @@ public class battleMain extends PApplet {
 
         /* Enemy bullets */
         bullets_enemy = new ArrayList<>();
-        temp_bullet_enemy = new PImage[3];
+        temp_bullet_enemy = new PImage[1];
         for (int i = 0; i < temp_bullet_enemy.length; i++) {
             temp_bullet_enemy[i] = loadImage("src/assets/bullet/Idle/(" + (i + 1) + ").png");
         }
@@ -170,8 +171,8 @@ public class battleMain extends PApplet {
         }
         if (is_battle) {
             gameDelay();
-            background(255);
-            testingFrame();
+            background(bg_battle);
+//            testingFrame();
             playerMechanism();
             effectMechanism();
             enemiesMechanism();
@@ -211,7 +212,7 @@ public class battleMain extends PApplet {
                 explosions.remove(i);
                 break;
             } else {
-                System.out.println("MELEDAK!!");
+//                System.out.println("MELEDAK!!");
                 explosions.get(i).drawIdle(this, frame_ctr);
             }
         }
@@ -273,24 +274,32 @@ public class battleMain extends PApplet {
                 pause_ctr = -1;
                 round_end = false;
                 is_paused = false;
+                if (p.getHP() <= 0) {
+                    is_battle = false;
+                }
             }
         }
     }
 
     private void subResetup() {
         if (level == 1) {
+            bg_battle = loadImage("src/assets/Battlefield/1.png");
             fire_rate = 45;
             fire_ctr = 45;
         } else if (level == 2) {
+            bg_battle = loadImage("src/assets/Battlefield/2.png");
             fire_rate = 45;
             fire_ctr = 45;
         } else if (level == 3) {
+            bg_battle = loadImage("src/assets/Battlefield/3.png");
             fire_rate = 30;
             fire_ctr = 0;
         } else if (level == 4) {
+            bg_battle = loadImage("src/assets/Battlefield/4.png");
             fire_rate = 25;
             fire_ctr = 25;
         } else if (level >= 5) {
+            bg_battle = loadImage("src/assets/Battlefield/5.png");
             fire_rate = 15;
             fire_ctr = 15;
         }
@@ -370,13 +379,13 @@ public class battleMain extends PApplet {
 //            }
 
             for (int i = 0; i < enemy_rows; i++) {
-                System.out.println("Enemy " + i);
+//                System.out.println("Enemy " + i);
 
-                if (level == 1) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192, y_spawn[i], enemy_res, 3, 1, 0));
-                else if (level == 2) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 32, y_spawn[i], enemy_res, 3, 2, 0));
-                else if (level == 3) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 32, y_spawn[i], enemy_res, 6, 2, 0));
-                else if (level == 4) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 48, y_spawn[i], enemy_res, 6, 2, 0));
-                else if (level >= 5) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 48, y_spawn[i], enemy_res, 10, 2, 0));
+                if (level == 1) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192, y_spawn[i], enemy_res, 3, 1, 0, 1));
+                else if (level == 2) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 32, y_spawn[i], enemy_res, 3, 2, 0, 1));
+                else if (level == 3) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 32, y_spawn[i], enemy_res, 6, 2, 0, 1));
+                else if (level == 4) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 48, y_spawn[i], enemy_res, 6, 2, 0, 1));
+                else if (level >= 5) enemies.add(new Enemy(temp_enemy, temp_enemy_broken, 1280 - 192 - 48, y_spawn[i], enemy_res, 10, 2, 0, 1));
             }
 
             if (enemy_rows < 5) {
@@ -408,22 +417,40 @@ public class battleMain extends PApplet {
     }
 
     private void statsDisplay() {
-        textSize(16);
-        fill(0);
-        text("HP : " + p.getHP(), 48, 48);
-        fill(0);
-        text("ATK : " + p.getATK(), 48 + 72, 48);
-        fill(0);
-        text("Level : " + level, 48 + 72 + 192, 48);
-        fill(0);
-        text("fire_ctr : " + fire_ctr, 48 + 72 + 192 + 72, 48);
-        fill(0);
-        text("pause_ctr : " + pause_ctr, 48 + 72 + 192 + 72 + 128, 48);
+        try {
+            fill(255);
+            GUIButton b_HP = new GUIButton(148, 64, 100, 42);
+            rect(b_HP.getX() - (b_HP.getWidth() / 2), b_HP.getY() - (b_HP.getHeight() / 2), b_HP.getWidth(), b_HP.getHeight());
 
-        Formatter formatter = new Formatter();
-        formatter.format("%.2f", score);
-        textAlign(CENTER);
-        text(formatter.toString() + "s", 640, 48);
+            GUIButton b_TIMER = new GUIButton(WIDTH / 2, 64, 100, 42);
+            rect(b_TIMER.getX() - (b_TIMER.getWidth() / 2), b_TIMER.getY() - (b_TIMER.getHeight() / 2), b_TIMER.getWidth(), b_TIMER.getHeight());
+
+            GUIButton b_LEVEL = new GUIButton(b_HP.getX() + b_HP.getWidth(), 64, 100, 42);
+            rect(b_LEVEL.getX() - (b_LEVEL.getWidth() / 2), b_LEVEL.getY() - (b_LEVEL.getHeight() / 2), b_LEVEL.getWidth(), b_LEVEL.getHeight());
+
+            PFont mono = createFont("src/assets/fonts/Segoe_UI_Bold.ttf", 16);
+            textFont(mono);
+            textSize(16);
+
+            fill(0);
+            textAlign(CENTER, CENTER);
+            text("HP : " + p.getHP(), b_HP.getX(), b_HP.getY());
+            text("Level : " + level, b_LEVEL.getX(), b_LEVEL.getY());
+//
+//        fill(0);
+//        text("ATK : " + p.getATK(), 48 + 72, 48);
+//        fill(0);
+//        text("fire_ctr : " + fire_ctr, 48 + 72 + 192 + 72, 48);
+//        fill(0);
+//        text("pause_ctr : " + pause_ctr, 48 + 72 + 192 + 72 + 128, 48);
+
+            Formatter formatter = new Formatter();
+            formatter.format("%.2f", score);
+            textAlign(CENTER, CENTER);
+            text(formatter.toString() + "s", b_TIMER.getX(), b_TIMER.getY());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     private void testingFrame() {
@@ -448,6 +475,13 @@ public class battleMain extends PApplet {
     }
 
     private void playerMechanism() {
+        if (p.getHP() <= 0) {
+            p.brokeDown();
+            is_paused = true;
+//                            is_battle = false;
+            game_over = true;
+        }
+
         if (p.getY() < 360 - (4 * 48) - 32) {
             up = false;
         }
@@ -494,8 +528,8 @@ public class battleMain extends PApplet {
 
                 int bullet_distance = 3;
                 if (fire_chance >= 1 && fire_chance <= 1) {
-                    bullets_enemy.add(new BulletEnemy(temp_bullet, enemies.get(i).getX() - bullet_distance, enemies.get(i).getY(), enemy_bullet_res, enemies.get(i).getATK()));
-                    System.out.println("Dor dor");
+                    bullets_enemy.add(new BulletEnemy(temp_bullet, enemies.get(i).getX() - bullet_distance, enemies.get(i).getY(), enemy_bullet_res, enemies.get(i).getATK(), 1));
+//                    System.out.println("Dor dor");
                 }
             }
         }
@@ -520,11 +554,6 @@ public class battleMain extends PApplet {
                         hit = true;
 
                         p.getHit(bullets_enemy.get(i).getATK());
-                        if (p.getHP() <= 0) {
-                            p.brokeDown();
-//                            is_battle = false;
-                            game_over = true;
-                        }
                     }
                 }
 
@@ -535,9 +564,9 @@ public class battleMain extends PApplet {
 
                 /* Kena dong BOOM */
                 if (hit) {
-                    explosions.add(new Explosion(temp_explosion, bullets_enemy.get(i).getX(), bullets_enemy.get(i).getY(), explosion_res));
+                    explosions.add(new Explosion(temp_explosion, bullets_enemy.get(i).getX(), bullets_enemy.get(i).getY(), explosion_res, 8));
                     bullets_enemy.remove(i);
-                    System.out.println("DUARRRRR!!!!! kenek kon thoel");
+//                    System.out.println("DUARRRRR!!!!! kenek kon thoel");
                 }
             }
         }
@@ -550,10 +579,10 @@ public class battleMain extends PApplet {
             if (fire_ctr == fire_rate) {
                 if (bullets.size() <= max_bullet) {
                     is_firing = true;
-                    effects.add(new Effects(temp_effect_red, p.getX() + 32, p.getY(), effect_res));
-                    bullets.add(new Bullet(temp_bullet, p.getX() + bullet_distance, p.getY(), player_bullet_res, p.getATK()));
+                    effects.add(new Effects(temp_effect_red, p.getX() + 32, p.getY(), effect_res, 3));
+                    bullets.add(new Bullet(temp_bullet, p.getX() + bullet_distance, p.getY(), player_bullet_res, p.getATK(), 1));
                 }
-                System.out.println("Test");
+//                System.out.println("Test");
                 fire = false;
             }
         }
@@ -596,9 +625,9 @@ public class battleMain extends PApplet {
 
                 /* Kena dong BOOM */
                 if (hit) {
-                    explosions.add(new Explosion(temp_explosion, bullets.get(i).getX(), bullets.get(i).getY(), explosion_res));
+                    explosions.add(new Explosion(temp_explosion, bullets.get(i).getX(), bullets.get(i).getY(), explosion_res, 8));
                     bullets.remove(i);
-                    System.out.println("DUARRRRR!!!!!, enemy sisa " + enemies.size());
+//                    System.out.println("DUARRRRR!!!!!, enemy sisa " + enemies.size());
                 }
             }
         }
@@ -636,6 +665,9 @@ public class battleMain extends PApplet {
             }
             if (key == 'q') {
                 killenemies = true;
+            }
+            if (key == 'l') {
+                p.HP = 0;
             }
         }
     }
