@@ -274,6 +274,9 @@ public class battleMain extends PApplet {
                 pause_ctr = -1;
                 round_end = false;
                 is_paused = false;
+                if (p.getHP() <= 0) {
+                    is_battle = false;
+                }
             }
         }
     }
@@ -546,6 +549,7 @@ public class battleMain extends PApplet {
                         p.getHit(bullets_enemy.get(i).getATK());
                         if (p.getHP() <= 0) {
                             p.brokeDown();
+                            is_paused = true;
 //                            is_battle = false;
                             game_over = true;
                         }
