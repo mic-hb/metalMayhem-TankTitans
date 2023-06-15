@@ -170,8 +170,8 @@ public class battleMain extends PApplet {
         }
         if (is_battle) {
             gameDelay();
-            background(255);
-            testingFrame();
+            background(bg_battle);
+//            testingFrame();
             playerMechanism();
             effectMechanism();
             enemiesMechanism();
@@ -279,18 +279,23 @@ public class battleMain extends PApplet {
 
     private void subResetup() {
         if (level == 1) {
+            bg_battle = loadImage("src/assets/Battlefield/1.png");
             fire_rate = 45;
             fire_ctr = 45;
         } else if (level == 2) {
+            bg_battle = loadImage("src/assets/Battlefield/2.png");
             fire_rate = 45;
             fire_ctr = 45;
         } else if (level == 3) {
+            bg_battle = loadImage("src/assets/Battlefield/3.png");
             fire_rate = 30;
             fire_ctr = 0;
         } else if (level == 4) {
+            bg_battle = loadImage("src/assets/Battlefield/4.png");
             fire_rate = 25;
             fire_ctr = 25;
         } else if (level >= 5) {
+            bg_battle = loadImage("src/assets/Battlefield/5.png");
             fire_rate = 15;
             fire_ctr = 15;
         }
