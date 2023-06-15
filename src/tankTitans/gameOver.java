@@ -24,7 +24,7 @@ public class gameOver extends PApplet {
      *  Round: Main Menu
      */
     private PImage bg_mainMenu;
-    private GUIButton textbox = new GUIButton("inputText", 640, 540, 461, 92, Color.WHITE);
+    private GUIButton textbox = new GUIButton( 640, 540, 461, 92, Color.WHITE);
 //    private GUIButton b_highscore = new GUIButton("", 620, 400, 100, 75, Color.CYAN);
 //    private GUIButton b_exit = new GUIButton("", 620, 500, 100, 75, Color.CYAN);
     private boolean click_playGame = false;

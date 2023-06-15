@@ -17,7 +17,7 @@ public class highscoreMenu extends PApplet {
      *  Round: High Score
      */
     private PImage bg_highScore;
-    private GUIButton b_highscore = new GUIButton("Back",620, 400, 100, 75, Color.CYAN);
+    private GUIButton b_highscore = new GUIButton(620, 400, 100, 75, Color.CYAN);
     private boolean click_highScore = false;
 
     public static void main(String[] args) {
