@@ -19,7 +19,7 @@ public class PlayMusic {
 
     }
 
-    public void play(){
+    public void playOnce(){
         try {
             music_file = new File(file_path);
             if (music_file.exists()) {
@@ -28,6 +28,23 @@ public class PlayMusic {
                 clip.open(audio_input);
                 clip.start();
                 clip.loop(0);
+            } else {
+                System.out.println("File tidak ada");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void play(){
+        try {
+            music_file = new File(file_path);
+            if (music_file.exists()) {
+                audio_input = AudioSystem.getAudioInputStream(music_file);
+                clip = AudioSystem.getClip();
+                clip.open(audio_input);
+                clip.start();
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
             } else {
                 System.out.println("File tidak ada");
             }

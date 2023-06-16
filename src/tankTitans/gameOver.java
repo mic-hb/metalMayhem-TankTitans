@@ -174,17 +174,19 @@ public class gameOver extends PApplet {
     }
 
     public void mousePressed(){
-        if (click_exitgame) {
-            String[] args = {"mainMenu"};
-            PApplet.runSketch(args, new tankTitans());
-            surface.setVisible(false);
-            stop();
-        }
-        if (click_playGame) {
-            String[] args = {"runBattle"};
-            PApplet.runSketch(args, new battleMain());
-            surface.setVisible(false);
-            stop();
+        if (args.equals("WinnerChickenDinner")) {
+            if (click_exitgame) {
+                String[] args = {"mainMenu"};
+                PApplet.runSketch(args, new tankTitans());
+                surface.setVisible(false);
+                stop();
+            }
+            if (click_playGame) {
+                String[] args = {"runBattle"};
+                PApplet.runSketch(args, new battleMain());
+                surface.setVisible(false);
+                stop();
+            }
         }
     }
 
