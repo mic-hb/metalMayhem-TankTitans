@@ -8,21 +8,43 @@ import java.io.File;
 public class PlayMusic {
     String file_path;
     Clip clip;
+    File music_file;
+    AudioInputStream audio_input;
 
     public PlayMusic(String filepath) {
         this.file_path = filepath;
     }
 
+    public void setup(){
+
+    }
+
+    public void playOnce(){
+        try {
+            music_file = new File(file_path);
+            if (music_file.exists()) {
+                audio_input = AudioSystem.getAudioInputStream(music_file);
+                clip = AudioSystem.getClip();
+                clip.open(audio_input);
+                clip.start();
+                clip.loop(0);
+            } else {
+                System.out.println("File tidak ada");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     public void play(){
         try {
-            File music_file = new File(file_path);
+            music_file = new File(file_path);
             if (music_file.exists()) {
-                AudioInputStream audio_input = AudioSystem.getAudioInputStream(music_file);
+                audio_input = AudioSystem.getAudioInputStream(music_file);
                 clip = AudioSystem.getClip();
                 clip.open(audio_input);
                 clip.start();
                 clip.loop(Clip.LOOP_CONTINUOUSLY);
-                Thread.sleep(100);
             } else {
                 System.out.println("File tidak ada");
             }
