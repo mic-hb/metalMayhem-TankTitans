@@ -174,7 +174,7 @@ public class gameOver extends PApplet {
     }
 
     public void mousePressed(){
-        if (args.equals("gameOver")) {
+        if (args[0].equals("gameOver")) {
             if (click_exitgame) {
                 String[] args = {"mainMenu"};
                 PApplet.runSketch(args, new tankTitans());
